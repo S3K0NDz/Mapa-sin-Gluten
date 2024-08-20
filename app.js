@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Inicializar el mapa
-    var map = L.map('map').setView([51.509169, -0.0632201], 10); // Centrado inicial en Londres
+    var map = L.map('map').setView([40.4637, -3.7492], 10); // Centrado en España con zoom 6
 
     // Añadir una capa base de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -79,6 +79,16 @@ document.addEventListener("DOMContentLoaded", function () {
             addMarkers(obrador, userLocation);
         } else if (selectedData === 'restaurante') {
             addMarkers(restaurante, userLocation);
+        } else if (selectedData === 'heladeria') {
+            addMarkers(heladeria, userLocation);
+        } else if (selectedData === 'tienda') {
+            addMarkers(tienda, userLocation);
+        } else if (selectedData === 'barcafeteria') {
+            addMarkers(barcafeteria, userLocation);
+        } else if (selectedData === 'cafeteriaobrador') {
+            addMarkers(cafeteriaobrador, userLocation);
+        } else if (selectedData === 'takeaway') {
+            addMarkers(takeaway, userLocation);
         }
     }
 
@@ -87,6 +97,11 @@ document.addEventListener("DOMContentLoaded", function () {
         var searchTerm = document.getElementById('search').value.toLowerCase();
         var suggestionsDiv = document.getElementById('suggestions');
         suggestionsDiv.innerHTML = ''; // Limpiar sugerencias anteriores
+
+        // No mostrar sugerencias si el término de búsqueda está vacío
+        if (searchTerm.length === 0) {
+            return;
+        }
 
         data.features.forEach(function (feature) {
             var properties = feature.properties;
@@ -126,6 +141,16 @@ document.addEventListener("DOMContentLoaded", function () {
             showSuggestions(obrador);
         } else if (selectedData === 'restaurante') {
             showSuggestions(restaurante);
+        } else if (selectedData === 'heladeria') {
+            showSuggestions(heladeria);
+        } else if (selectedData === 'tienda') {
+            showSuggestions(tienda);
+        } else if (selectedData === 'barcafeteria') {
+            showSuggestions(barcafeteria);
+        } else if (selectedData === 'cafeteriaobrador') {
+            showSuggestions(cafeteriaobrador);
+        } else if (selectedData === 'takeaway') {
+            showSuggestions(takeaway);
         }
     });
 
