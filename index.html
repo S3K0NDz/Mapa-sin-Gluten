@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa de Franquicias y Obradores</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
@@ -167,6 +169,39 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="lista.js"></script>
     <script src="app.js"></script>
+    <script>
+        // Función para poner el mapa en pantalla completa
+        document.getElementById('fullScreenBtn').addEventListener('click', function () {
+            document.getElementById('map').style.height = '100vh';
+            document.getElementById('map').style.width = '100vw';
+            document.getElementById('map').style.position = 'absolute';
+            document.getElementById('map').style.top = '0';
+            document.getElementById('map').style.left = '0';
+            document.getElementById('controls').style.display = 'none';
+            document.getElementById('fullScreenBtn').style.display = 'none';
+            document.getElementById('exitFullScreenBtn').style.display = 'block';
+            
+            // Recalcular el tamaño del mapa
+            map.invalidateSize();
+        });
+    
+        // Función para salir de la pantalla completa
+        document.getElementById('exitFullScreenBtn').addEventListener('click', function () {
+            document.getElementById('map').style.height = 'calc(100vh - 220px)';
+            document.getElementById('map').style.width = '100%';
+            document.getElementById('map').style.position = 'relative';
+            document.getElementById('map').style.top = 'unset';
+            document.getElementById('map').style.left = 'unset';
+            document.getElementById('controls').style.display = 'block';
+            document.getElementById('fullScreenBtn').style.display = 'block';
+            document.getElementById('exitFullScreenBtn').style.display = 'none';
+            
+            // Recalcular el tamaño del mapa
+            map.invalidateSize();
+        });
+    </script>
+
+
     <script>
         // Función para poner el mapa en pantalla completa
         document.getElementById('fullScreenBtn').addEventListener('click', function () {
