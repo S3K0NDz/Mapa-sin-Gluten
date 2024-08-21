@@ -10,52 +10,57 @@ document.addEventListener("DOMContentLoaded", function () {
     var markers = []; // Almacenará los marcadores actuales
 
     // Función para agregar marcadores al mapa
-    function addMarkers(data, userLocation) {
-        // Limpiar marcadores anteriores
-        markers.forEach(function (marker) {
-            map.removeLayer(marker);
-        });
-        markers = [];
+    // Función para agregar marcadores al mapa
+function addMarkers(data, userLocation) {
+    // Limpiar marcadores anteriores
+    markers.forEach(function (marker) {
+        map.removeLayer(marker);
+    });
+    markers = [];
 
-        // Obtener el término de búsqueda
-        var searchTerm = document.getElementById('search').value.toLowerCase();
+    // Obtener el término de búsqueda
+    var searchTerm = document.getElementById('search').value.toLowerCase();
 
-        // Añadir nuevos marcadores que coincidan con la búsqueda
-        data.features.forEach(function (feature) {
-            var properties = feature.properties;
-            var coordinates = feature.geometry.coordinates;
+    // Añadir nuevos marcadores que coincidan con la búsqueda
+    data.features.forEach(function (feature) {
+        var properties = feature.properties;
+        var coordinates = feature.geometry.coordinates;
 
-            // Filtrar por nombre o localidad
-            var matchesSearch = properties.NOMBRE.toLowerCase().includes(searchTerm) ||
-                properties.LOCALIDAD.toLowerCase().includes(searchTerm);
-            var isNearby = true;
+        // Filtrar por nombre o localidad
+        var matchesSearch = properties.NOMBRE.toLowerCase().includes(searchTerm) ||
+            properties.LOCALIDAD.toLowerCase().includes(searchTerm);
+        var isNearby = true;
 
-            // Si hay una ubicación del usuario, calcular la distancia
-            if (userLocation) {
-                var distance = calculateDistance(userLocation, [coordinates[1], coordinates[0]]);
-                isNearby = distance <= 10; // Mostrar solo los puntos dentro de 10 km
-            }
-
-            if (matchesSearch && isNearby) {
-                var marker = L.marker([coordinates[1], coordinates[0]]).addTo(map);
-                marker.bindPopup(`
-                    <strong>${properties.NOMBRE}</strong><br>
-                    ${properties.DIRECCION}<br>
-                    ${properties.LOCALIDAD}, ${properties.REGION}<br>
-                    <a href="http://${properties.WEB}" target="_blank">${properties.WEB}</a><br>
-                    ${properties.COMENTARIOA}<br>
-                    ${properties.COMENTARIOB}
-                `);
-
-                markers.push(marker); // Guardar el marcador
-            }
-        });
-
-        // Si no hay resultados y hay una búsqueda activa, centrar el mapa en la vista inicial
-        if (markers.length === 0 && searchTerm) {
-            map.setView([51.509169, -0.0632201], 10); // Centrar en Londres como vista predeterminada
+        // Si hay una ubicación del usuario, calcular la distancia
+        if (userLocation) {
+            var distance = calculateDistance(userLocation, [coordinates[1], coordinates[0]]);
+            isNearby = distance <= 10; // Mostrar solo los puntos dentro de 10 km
         }
+
+        if (matchesSearch && isNearby) {
+            var marker = L.marker([coordinates[1], coordinates[0]]).addTo(map);
+            var googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${coordinates[1]},${coordinates[0]}`;
+
+            marker.bindPopup(`
+                <strong>${properties.NOMBRE}</strong><br>
+                ${properties.DIRECCION}<br>
+                ${properties.LOCALIDAD}, ${properties.REGION}<br>
+                <a href="http://${properties.WEB}" target="_blank">${properties.WEB}</a><br>
+                ${properties.COMENTARIOA}<br>
+                ${properties.COMENTARIOB}<br>
+                <a href="${googleMapsUrl}" target="_blank">Ver en Google Maps</a>
+            `);
+
+            markers.push(marker); // Guardar el marcador
+        }
+    });
+
+    // Si no hay resultados y hay una búsqueda activa, centrar el mapa en la vista inicial
+    if (markers.length === 0 && searchTerm) {
+        map.setView([51.509169, -0.0632201], 10); // Centrar en Londres como vista predeterminada
     }
+}
+
 
     // Función para calcular la distancia entre dos puntos (Haversine formula)
     function calculateDistance(coord1, coord2) {
