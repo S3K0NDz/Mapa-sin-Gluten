@@ -42,14 +42,37 @@ function addMarkers(data, userLocation) {
             var googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${coordinates[1]},${coordinates[0]}`;
 
             marker.bindPopup(`
-                <strong>${properties.NOMBRE}</strong><br>
-                ${properties.DIRECCION}<br>
-                ${properties.LOCALIDAD}, ${properties.REGION}<br>
-                <a href="http://${properties.WEB}" target="_blank">${properties.WEB}</a><br>
-                ${properties.COMENTARIOA}<br>
-                ${properties.COMENTARIOB}<br>
-                <a href="${googleMapsUrl}" target="_blank">Ver en Google Maps</a>
+                <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+                    <h2 style="font-size: 16px; margin: 0; color: #0f1b28;">${properties.NOMBRE}</h2>
+                    <p style="margin: 8px 0; color: #555;">
+                        ${properties.DIRECCION}<br>
+                        ${properties.LOCALIDAD}, ${properties.REGION}
+                    </p>
+                    <p style="margin: 8px 0; color: #777;">
+                        <a href="http://${properties.WEB}" target="_blank" style="color: #1e90ff; text-decoration: none;">
+                            ${properties.WEB}
+                        </a>
+                    </p>
+                    <p style="margin: 8px 0; color: #777; font-style: italic;">
+                        ${properties.COMENTARIOA}<br>
+                        ${properties.COMENTARIOB}
+                    </p>
+                    <a href="${googleMapsUrl}" target="_blank" style="
+                        display: inline-block;
+                        padding: 10px 15px;
+                        background-color: #0f1b28;
+                        color: white;
+                        text-decoration: none;
+                        border-radius: 5px;
+                        text-align: center;
+                        margin-top: 10px;
+                        font-weight: bold;
+                    ">
+                        Ver en Google Maps
+                    </a>
+                </div>
             `);
+            
 
             markers.push(marker); // Guardar el marcador
         }

@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa de Franquicias y Obradores</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
@@ -22,24 +26,28 @@
             font-size: 24px;
             font-weight: bold;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        #map {
-            height: 80vh;
-            width: 100%;
-            margin-top: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
         }
 
         #controls {
-            margin: 20px auto;
             padding: 20px;
-            width: 90%;
-            max-width: 400px;
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            width: 90%;
+            max-width: 400px;
+            flex-shrink: 0;
+            z-index: 1000;
+        }
+
+        #map {
+            height: calc(100vh - 220px);
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            transition: height 0.3s ease;
         }
 
         #controls label {
@@ -74,6 +82,31 @@
 
         #controls button:hover {
             background-color: #0f1b28;
+        }
+
+        #fullScreenBtn,
+        #exitFullScreenBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #0f1b28;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1001;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #fullScreenBtn:hover,
+        #exitFullScreenBtn:hover {
+            background-color: #0f1b28;
+        }
+
+        #exitFullScreenBtn {
+            display: none;
         }
 
         #suggestions {
@@ -122,15 +155,43 @@
         <label for="search">Buscar:</label>
         <input type="text" id="search" placeholder="Buscar por nombre o localidad">
         <div id="suggestions"></div>
-        <br/>
+        <br />
         <button id="findMe">Buscar cerca de mi ubicación</button>
     </div>
 
     <div id="map"></div>
 
+    <button id="fullScreenBtn"><i class="fas fa-expand"></i></button>
+    <button id="exitFullScreenBtn"><i class="fas fa-compress"></i></button>
+
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="lista.js"></script>
     <script src="app.js"></script>
+    <script>
+        // Función para poner el mapa en pantalla completa
+        document.getElementById('fullScreenBtn').addEventListener('click', function () {
+            document.getElementById('map').style.height = '100vh';
+            document.getElementById('map').style.width = '100vw';
+            document.getElementById('map').style.position = 'absolute';
+            document.getElementById('map').style.top = '0';
+            document.getElementById('map').style.left = '0';
+            document.getElementById('controls').style.display = 'none';
+            document.getElementById('fullScreenBtn').style.display = 'none';
+            document.getElementById('exitFullScreenBtn').style.display = 'block';
+        });
+
+        // Función para salir de la pantalla completa
+        document.getElementById('exitFullScreenBtn').addEventListener('click', function () {
+            document.getElementById('map').style.height = 'calc(100vh - 220px)';
+            document.getElementById('map').style.width = '100%';
+            document.getElementById('map').style.position = 'relative';
+            document.getElementById('map').style.top = 'unset';
+            document.getElementById('map').style.left = 'unset';
+            document.getElementById('controls').style.display = 'block';
+            document.getElementById('fullScreenBtn').style.display = 'block';
+            document.getElementById('exitFullScreenBtn').style.display = 'none';
+        });
+    </script>
 </body>
 
 </html>
