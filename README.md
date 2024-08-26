@@ -9,3 +9,9 @@
 - **Filtro por tipo de establecimiento**: Filtra los resultados para ver solo restaurantes, cafeterías, tiendas u otros tipos de lugares sin gluten.
 - **Buscar cerca de ti**: Utiliza la geolocalización para encontrar establecimientos sin gluten cerca de tu ubicación actual.
 - **Mapa interactivo**: Visualiza todos los establecimientos en un mapa interactivo que muestra la distancia desde tu ubicación actual.
+
+
+![Logo de Mapa Sin Gluten](favicon.png)
+![Mapa Sin Gluten](app1.png)
+![Mapa Sin Gluten](app2.png)
+
